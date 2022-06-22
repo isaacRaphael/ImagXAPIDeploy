@@ -83,6 +83,8 @@ namespace ImagXAPI
                 options.Password.RequireDigit = false;
             }
                 ).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+
+            services.AddCors();
             services.AddControllers().AddNewtonsoftJson();
 
             var jwtSettings = new JwtSettings();
@@ -162,6 +164,11 @@ namespace ImagXAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) 
+                .AllowCredentials());
             app.UseAuthentication();
 
             app.UseAuthorization();
