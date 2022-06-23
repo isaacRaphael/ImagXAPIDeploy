@@ -26,7 +26,7 @@ namespace ImagXAPI.Controllers.Xsharing
             _userManager = userManager;
         }
 
-        [HttpGet]
+        [HttpGet("/{userId}")]
         public async Task<ActionResult> RetrieveApiKey(string userId)
         {
             var user = await _unitOfWork.Users.GetById(userId);
