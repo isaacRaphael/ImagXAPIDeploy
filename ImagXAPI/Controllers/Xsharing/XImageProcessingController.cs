@@ -52,10 +52,10 @@ namespace ImagXAPI.Controllers.Xsharing
             if (!exists)
                 return BadRequest(new { Success = false, Message = "invalid api key" });
 
-            var imagePath = Directory.GetFiles("~/ImageStore");
+            var imagePath = Directory.GetFiles("./Controllers/Xsharing/ImageStore");
             var media = Path.GetFileName(imagePath[0]);
 
-            var result = await _imageService.AddWithDimensions(media, width, height);
+            var result = await _imageService.AddWithDimensions(imagePath[0], width, height);
 
             if (result is null || result.Length < 1)
                 return NotFound(new { Success = false, Message = "Could'nt process request" });
