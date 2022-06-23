@@ -35,6 +35,17 @@ namespace ImagXAPI.Controllers.Xsharing
                 return BadRequest(new { Success = false, Message = "cant retieve user" });
 
             var presentKey = await _unitOfWork.Keys.GetAll();
+
+            if(presentKey is null)
+            {
+                var dkey = new SharingKey { AppUserId = user.Id };
+                var dresult = await _unitOfWork.Keys.Add(dkey);
+
+                if (dresult is null)
+                    return NotFound(new { Success = false, Message = "could not comple process" });
+
+                return Ok(dresult);
+            }
             var p = presentKey.FirstOrDefault(k => k.AppUserId == userId);
 
             if (p is not null)
